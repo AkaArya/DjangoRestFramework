@@ -5,6 +5,10 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Student
 from .serializers import StudentSerializer
+from .serializers import StudentSerializer2
+
+from rest_framework import mixins
+from rest_framework import generics
 
 class StudentList(APIView):
 
@@ -20,6 +24,10 @@ class StudentList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class StudentDetail(APIView):
+    """
+    Retrieve, update or delete a snippet instance.
+    """
     def get_object(self, id):
         try:
             return Student.objects.get(id=id)
@@ -33,7 +41,7 @@ class StudentList(APIView):
 
     def put(self, request, id, format=None):
         student = self.get_object(id)
-        serializer = StudentSerializer(student, data=request.data)
+        serializer = StudentSerializer2(student, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -42,7 +50,4 @@ class StudentList(APIView):
     def delete(self, request, id, format=None):
         student = self.get_object(id)
         student.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-
+        return Response(status=status.HTTP_200_OK)
