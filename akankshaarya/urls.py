@@ -21,7 +21,7 @@ from dataPeace import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^stocks/', views.StudentList.as.view()),
+    url(r'^api/users', views.StudentList.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
