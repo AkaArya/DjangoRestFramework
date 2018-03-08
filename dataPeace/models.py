@@ -13,6 +13,6 @@ class Student(models.Model):
     age = models.IntegerField();
 
     def __str__(self):
-        return self.first_name
+        return self.id
 
 
