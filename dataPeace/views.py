@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404
+
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -6,11 +6,11 @@ from rest_framework import status
 from .models import Student
 from .serializers import StudentSerializer
 from .serializers import StudentSerializer2
-
-from rest_framework import mixins
 from rest_framework import generics
 
-class StudentList(APIView):
+
+
+'''class StudentList(APIView):
 
     def get(self, request,format=None):
         student = Student.objects.all()
@@ -22,11 +22,11 @@ class StudentList(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)'''
 
 class StudentDetail(APIView):
     """
-    Retrieve, update or delete a snippet instance.
+    Retrieve, update or delete a student instance.
     """
     def get_object(self, id):
         try:
@@ -51,3 +51,10 @@ class StudentDetail(APIView):
         student = self.get_object(id)
         student.delete()
         return Response(status=status.HTTP_200_OK)
+
+
+class StudentList(generics.ListCreateAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+
